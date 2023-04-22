@@ -97,11 +97,11 @@ void CUSER_BOOK::OnBnClickedButton1()
 
 	}
 
-	pmaindlg->main_recode->Close();
+	/*pmaindlg->main_recode->Close();
 	pmaindlg->main_recode->Open(CRecordset::dynaset, "select book,a from abcd");
 	for (int i = 0; i < data.size()-1; i++) {
 	
-		if ((i%2==0)&&(data[i] == book_name)&&(data[i+1]=="")) {
+		if ((data[i] == book_name)&&(data[i+1]=="")) {
 			str_format.Format("UPDATE abcd SET a='%s',b='%s',c='%s',d='%s',e='%s' WHERE book = '%s' ", book_id,book_pw,name,phone,home, book_name);
 			pmaindlg->main_db.ExecuteSQL(str_format);
 			str_format.Format("'%s'이(가) 대출 되었습니다.",book_name);
@@ -109,7 +109,41 @@ void CUSER_BOOK::OnBnClickedButton1()
 			
 		}
 
+	}*/
+	
+
+	/*for (int i = 0; i < data.size() - 1; i++) {
+
+		if ((data[i] == book_name)) {
+			str_format.Format("UPDATE abcd SET a='%s',b='%s',c='%s',d='%s',e='%s' WHERE book = '%s' ", book_id, book_pw, name, phone, home, book_name);
+			pmaindlg->main_db.ExecuteSQL(str_format);
+			str_format.Format("'%s'이(가) 대출 되었습니다.", book_name);
+			AfxMessageBox(str_format);
+
+		}
+
+	}*/
+
+	for (int i = 5; i < data.size() - 5; i++) {
+
+		if ((data[i] == book_name)) {
+			if (data[i-4]  == "") {
+				str_format.Format("UPDATE abcd SET a='%s',b='%s',c='%s',d='%s',e='%s' WHERE book = '%s' ", book_id, book_pw, name, phone, home, book_name);
+				pmaindlg->main_db.ExecuteSQL(str_format);
+				str_format.Format("'%s'이(가) 대출 되었습니다.", book_name);
+				AfxMessageBox(str_format);
+			}
+			else{
+
+				str_format.Format("'%s'이(가) 대출 중입니다.", book_name);
+				AfxMessageBox(str_format);
+
+			}
+
+		}
+
 	}
+
 	int check = m_user_book_ctn.GetHeaderCtrl()->GetItemCount();
 
 	if (check == 5) {

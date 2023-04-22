@@ -50,9 +50,12 @@ void CLOGIN::OnBnClickedButton1()
 	
 	GetDlgItemText(IDC_EDIT1, ID);
 	GetDlgItemText(IDC_EDIT2, PW);
+	
+	int flag = 0;
 
 	if (ID == "admin" && PW == "root") {
 		
+		flag = 1;
 		CADMIN* padmin = new CADMIN;
 
 		padmin->Create(IDD_ADMIN);
@@ -62,7 +65,8 @@ void CLOGIN::OnBnClickedButton1()
 	}
 	else {
 		//pdatabase->database_open();
-		pdatabase->main_recode->Open(CRecordset::dynaset, "select a,b from abcd");
+		flag = 2;
+		pdatabase->main_recode->Open(CRecordset::dynaset, "select a,b from abcd where book is null");
 
 		int a = 1;
 		for (pdatabase->main_recode->MoveFirst(); !pdatabase->main_recode->IsEOF(); pdatabase->main_recode->MoveNext()) {
@@ -98,8 +102,13 @@ void CLOGIN::OnBnClickedButton1()
 			}
 		}
 	}
-	//pdatabase->main_recode->Close();
 	
+	if (!(flag == 1 || flag == 2)) {
+		str_format.Format("%s는 없는 ID 입니다.", ID);
+		AfxMessageBox(str_format);
+	}
+	
+	pdatabase->main_recode->Close();
 	
 
 }
