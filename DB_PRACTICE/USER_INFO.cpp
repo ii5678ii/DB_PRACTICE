@@ -6,6 +6,7 @@
 #include "afxdialogex.h"
 #include "USER_INFO.h"
 #include "DB_PRACTICEDlg.h"
+#include "USER.h"
 #include <iostream>
 #include <vector>
 
@@ -88,11 +89,11 @@ void CUSER_INFO::OnBnClickedButton5()
 {
 	
 	CDBPRACTICEDlg* pmaindlg = (CDBPRACTICEDlg*)AfxGetMainWnd();
+	CUSER* pUserDlg = (CUSER*)AfxGetMainWnd();
 	CString str_format;
 	GetDlgItemText(IDC_EDIT1, update_id_re);
 	str_format.Format("delete from abcd where book is null and a ='%s'", update_id_re);
 	pmaindlg->main_db.ExecuteSQL(str_format);
-	
 	pmaindlg->m_id_list.ResetContent();
 	CDialog::OnOK();
 }
