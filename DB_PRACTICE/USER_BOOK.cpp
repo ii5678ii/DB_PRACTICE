@@ -33,6 +33,7 @@ BEGIN_MESSAGE_MAP(CUSER_BOOK, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CUSER_BOOK::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CUSER_BOOK::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CUSER_BOOK::OnBnClickedButton3)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, &CUSER_BOOK::OnLvnItemchangedList1)
 END_MESSAGE_MAP()
 
 
@@ -47,7 +48,7 @@ BOOL CUSER_BOOK::OnInitDialog()
 	m_user_book_ctn.InsertColumn(3, "PHONE", LVCFMT_LEFT, 120);
 	m_user_book_ctn.InsertColumn(4, "HOME", LVCFMT_LEFT, 90);
 	m_user_book_list.AddString(book_id);
-	OnBnClickedButton3();
+	//OnBnClickedButton3();
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -279,9 +280,6 @@ void CUSER_BOOK::OnBnClickedButton2()
 }
 
 
-
-
-
 void CUSER_BOOK::OnBnClickedButton3()
 {
 	CDBPRACTICEDlg* pmaindlg = (CDBPRACTICEDlg*)AfxGetMainWnd();
@@ -321,4 +319,22 @@ void CUSER_BOOK::OnBnClickedButton3()
 		c++;
 	}
 	pmaindlg->main_recode->Close();
+}
+
+
+void CUSER_BOOK::OnLvnItemchangedList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	
+	NM_LISTVIEW* pNMView = (NM_LISTVIEW*)pNMHDR;
+	clicked_index = pNMView->iItem;
+
+	m_user_book_ctn.GetSelectionMark();
+	CString temp;
+
+	CString idNum = m_user_book_ctn.GetItemText(clicked_index, 0);
+	
+	SetDlgItemText(IDC_EDIT3, idNum);
+
+	*pResult = 0;
 }

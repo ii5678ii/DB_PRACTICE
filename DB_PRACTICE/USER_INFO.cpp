@@ -33,6 +33,7 @@ void CUSER_INFO::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CUSER_INFO, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CUSER_INFO::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON5, &CUSER_INFO::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
@@ -83,5 +84,15 @@ void CUSER_INFO::OnBnClickedButton1()
 	
 }
 
-
-
+void CUSER_INFO::OnBnClickedButton5()
+{
+	
+	CDBPRACTICEDlg* pmaindlg = (CDBPRACTICEDlg*)AfxGetMainWnd();
+	CString str_format;
+	GetDlgItemText(IDC_EDIT1, update_id_re);
+	str_format.Format("delete from abcd where book is null and a ='%s'", update_id_re);
+	pmaindlg->main_db.ExecuteSQL(str_format);
+	
+	pmaindlg->m_id_list.ResetContent();
+	CDialog::OnOK();
+}

@@ -30,4 +30,6 @@ public:
 	CString book_id;
 	CString book_pw;
 	afx_msg void OnBnClickedButton3();
+	afx_msg void OnLvnItemchangedList1(NMHDR* pNMHDR, LRESULT* pResult);
+	int clicked_index;
 };
